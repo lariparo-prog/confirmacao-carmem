@@ -45,7 +45,7 @@ async function buscarConvidados() {
     document.getElementById("convidadoSelecionado").classList.add("escondido");
     document.getElementById("convidadoSelecionado").innerHTML = "";
 
-    if (texto.length < 1) {
+    if (texto.length < 2) {
         return;
     }
 
