@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel Admin</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<main class="story">
+
+    <div id="telaSenha" class="card">
+
+        <div class="topo">🔐</div>
+
+        <h3>Acesso Admin</h3>
+
+        <p class="subtitulo">
+            Digite a senha para ver a lista de confirmados.
+        </p>
+
+        <input type="password" id="senhaAdmin" placeholder="Senha do painel">
+
+        <button onclick="entrarAdmin()">Entrar</button>
+
+        <p id="erroSenha" class="toque"></p>
+
+    </div>
+
+    <div id="painelAdmin" class="card escondido">
+
+        <div class="topo">📋</div>
+
+        <h3>Painel Admin</h3>
+
+        <div id="resumoAdmin" class="resumo-admin"></div>
+
+        <div class="filtros-admin">
+            <button onclick="filtrarLista('todos')">Todos</button>
+            <button onclick="filtrarLista('entraram')">Entraram</button>
+            <button onclick="filtrarLista('naoEntraram')">Não entraram</button>
+        </div>
+
+        <input 
+            type="text" 
+            id="busca" 
+            placeholder="Pesquisar convidado"
+            onkeyup="pesquisarConvidado()"
+        >
+
+        <div id="listaConfirmados"></div>
+
+        <button onclick="copiarListaWhatsapp()">📋 Copiar para WhatsApp</button>
+
+        <button onclick="baixarCSV()">📥 Baixar Excel</button>
+
+        <button onclick="limparLista()">🗑️ Limpar Lista</button>
+
+    </div>
+
+</main>
+
+<script>
+const SENHA_ADMIN = "gabriel10";
+
+let lista = JSON.parse(localStorage.getItem("confirmacoes")) || [];
+
+let filtroAtual = "todos";
+
+let area = document.getElementById("listaConfirmados");
+let resumo = document.getElementById("resumoAdmin");
+
+function entrarAdmin() {
+    let senhaDigitada = document.getElementById("senhaAdmin").value;
+    let erro = document.getElementById("erroSenha");
+
+    if (senhaDigitada === SENHA_ADMIN) {
+        document.getElementById("telaSenha").classList.add("escondido");
+        document.getElementById("painelAdmin").classList.remove("escondido");
+
+        atualizarLista();
+    } else {
+        erro.innerHTML = "Senha incorreta. Tente novamente.";
+    }
+}
+
+function atualizarLista() {
+    lista = JSON.parse(localStorage.getItem("confirmacoes")) || [];
+
+    mostrarResumo();
+    aplicarFiltros();
+}
+
+function mostrarResumo() {
+    let totalConfirmacoes = lista.length;
+    let totalAdultos = 0;
+    let totalCriancas = 0;
+    let totalEntraram = 0;
+    let totalNaoEntraram = 0;
+
+    lista.forEach(function(item) {
+        totalAdultos += Number(item.adultos) || 0;
+        totalCriancas += Number(item.criancas) || 0;
+
+        if (item.status === "utilizado") {
+            totalEntraram++;
+        } else {
+            totalNaoEntraram++;
+        }
+    });
+
+    let totalPessoas = totalAdultos + totalCriancas;
+
+    resumo.innerHTML = `
+        <div class="resumo-admin-grid">
+            <div>
+                <strong>${totalConfirmacoes}</strong>
+                <span>confirmações</span>
+            </div>
+
+            <div>
+                <strong>${totalPessoas}</strong>
+                <span>pessoas</span>
+            </div>
+
+            <div>
+                <strong>${totalAdultos}</strong>
+                <span>adultos</span>
+            </div>
+
+            <div>
+                <strong>${totalCriancas}</strong>
+                <span>crianças</span>
+            </div>
+
+            <div>
+                <strong>${totalEntraram}</strong>
+                <span>entraram</span>
+            </div>
+
+            <div>
+                <strong>${totalNaoEntraram}</strong>
+                <span>não entraram</span>
+            </div>
+        </div>
+    `;
+}
+
+function filtrarLista(filtro) {
+    filtroAtual = filtro;
+
+    aplicarFiltros();
+}
+
+function aplicarFiltros() {
+    let texto = document.getElementById("busca").value.toLowerCase();
+
+    let resultado = lista.filter(function(item) {
+        let combinaBusca =
+            item.nome.toLowerCase().includes(texto) ||
+            item.codigo.toLowerCase().includes(texto);
+
+        let combinaFiltro = true;
+
+        if (filtroAtual === "entraram") {
+            combinaFiltro = item.status === "utilizado";
+        }
+
+        if (filtroAtual === "naoEntraram") {
+            combinaFiltro = item.status !== "utilizado";
+        }
+
+        return combinaBusca && combinaFiltro;
+    });
+
+    mostrarLista(resultado);
+}
+
+function mostrarLista(listaFiltrada) {
+    area.innerHTML = "";
+
+    if (listaFiltrada.length === 0) {
+        area.innerHTML = "<p class='subtitulo'>Nenhuma confirmação encontrada.</p>";
+        return;
+    }
+
+    listaFiltrada.forEach(function(item) {
+        let totalPessoas = (Number(item.adultos) || 0) + (Number(item.criancas) || 0);
+
+        let statusTexto = "⏳ Não entrou";
+
+        if (item.status === "utilizado") {
+            statusTexto = "✅ Entrou";
+        }
+
+        area.innerHTML += `
+            <div class="convidado">
+                <span>${item.codigo}</span>
+                <strong>${item.nome}</strong>
+                <p>${item.adultos} adulto(s) • ${item.criancas} criança(s)</p>
+                <p>Total: ${totalPessoas} pessoa(s)</p>
+                <p>${item.data}</p>
+                <p><strong>${statusTexto}</strong></p>
+            </div>
+        `;
+    });
+}
+
+function pesquisarConvidado() {
+    aplicarFiltros();
+}
+
+function calcularTotais() {
+    let totalAdultos = 0;
+    let totalCriancas = 0;
+    let totalEntraram = 0;
+    let totalNaoEntraram = 0;
+
+    lista.forEach(function(item) {
+        totalAdultos += Number(item.adultos) || 0;
+        totalCriancas += Number(item.criancas) || 0;
+
+        if (item.status === "utilizado") {
+            totalEntraram++;
+        } else {
+            totalNaoEntraram++;
+        }
+    });
+
+    return {
+        confirmacoes: lista.length,
+        adultos: totalAdultos,
+        criancas: totalCriancas,
+        pessoas: totalAdultos + totalCriancas,
+        entraram: totalEntraram,
+        naoEntraram: totalNaoEntraram
+    };
+}
+
+function copiarListaWhatsapp() {
+    atualizarLista();
+
+    if (lista.length === 0) {
+        alert("Nenhuma confirmação para copiar.");
+        return;
+    }
+
+    let totais = calcularTotais();
+
+    let relatorio = "CONFIRMADOS - GABRIEL 10 ANOS\n\n";
+
+    lista.forEach(function(item) {
+        let status = item.status === "utilizado" ? "ENTROU" : "NÃO ENTROU";
+
+        relatorio += item.codigo + " | " + item.nome + " | " +
+            item.adultos + " adulto(s) | " +
+            item.criancas + " criança(s) | " +
+            status + " | " +
+            item.data + "\n";
+    });
+
+    relatorio += "\nTOTAL:\n";
+    relatorio += totais.confirmacoes + " confirmação(ões)\n";
+    relatorio += totais.adultos + " adulto(s)\n";
+    relatorio += totais.criancas + " criança(s)\n";
+    relatorio += totais.pessoas + " pessoa(s)\n";
+    relatorio += totais.entraram + " já entraram\n";
+    relatorio += totais.naoEntraram + " não entraram\n";
+
+    navigator.clipboard.writeText(relatorio);
+
+    alert("Lista copiada! Agora é só colar no WhatsApp.");
+}
+
+function baixarCSV() {
+    atualizarLista();
+
+    if (lista.length === 0) {
+        alert("Nenhuma confirmação para baixar.");
+        return;
+    }
+
+    let csv = "Código;Nome;Adultos;Crianças;Total de Pessoas;Status;Data\n";
+
+    lista.forEach(function(item) {
+        let totalPessoas = (Number(item.adultos) || 0) + (Number(item.criancas) || 0);
+        let status = item.status === "utilizado" ? "Entrou" : "Não entrou";
+
+        csv += item.codigo + ";";
+        csv += item.nome + ";";
+        csv += item.adultos + ";";
+        csv += item.criancas + ";";
+        csv += totalPessoas + ";";
+        csv += status + ";";
+        csv += item.data + "\n";
+    });
+
+    let arquivo = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+
+    let link = document.createElement("a");
+    link.href = URL.createObjectURL(arquivo);
+    link.download = "confirmados-gabriel-10-anos.csv";
+    link.click();
+}
+
+function limparLista() {
+    let confirmar = confirm("Tem certeza que deseja limpar toda a lista? Essa ação não pode ser desfeita.");
+
+    if (confirmar) {
+        localStorage.removeItem("confirmacoes");
+        localStorage.removeItem("proximoCodigo");
+        location.reload();
+    }
+}
+</script>
+
+</body>
+
+</html>

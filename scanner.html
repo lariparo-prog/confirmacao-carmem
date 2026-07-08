@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Leitor de QR Code</title>
+
+<link rel="stylesheet" href="style.css">
+
+<script src="https://unpkg.com/html5-qrcode"></script>
+
+</head>
+
+<body>
+
+<main class="story">
+
+<div class="card">
+
+    <div class="topo">📷</div>
+
+    <h3>Leitor QR Code</h3>
+
+    <p class="subtitulo">
+        Aponte a câmera para o comprovante.
+    </p>
+
+    <div id="reader"></div>
+
+</div>
+
+</main>
+
+<script>
+
+function sucesso(decodedText){
+
+    window.location.href = decodedText;
+
+}
+
+function erro(error){
+}
+
+let scanner = new Html5QrcodeScanner(
+    "reader",
+    {
+        fps:10,
+        qrbox:250
+    }
+);
+
+scanner.render(sucesso, erro);
+
+</script>
+
+</body>
+</html>

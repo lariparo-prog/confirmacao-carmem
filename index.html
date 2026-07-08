@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmação de Presença</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<main class="story">
+
+    <div id="tela1" class="card">
+        <div class="topo">🔎</div>
+
+        <h1>Carmem Mosqueira</h1>
+        <h2>80 anos</h2>
+
+        <p class="frase">
+            Encontre seu nome na lista<br>
+            para responder ao convite.
+        </p>
+
+        <input type="text" id="buscaNome" placeholder="Digite seu nome">
+
+        <div id="listaConvidados"></div>
+
+        <div id="convidadoSelecionado" class="escondido"></div>
+
+        <button onclick="processarConfirmacao()">
+            Confirmar Presença
+        </button>
+
+        <button onclick="processarNaoComparecimento()">
+            Não poderei comparecer
+        </button>
+
+        <p class="toque">
+            Sua presença está quase confirmada!
+        </p>
+    </div>
+
+    <div id="tela2" class="card escondido animado"></div>
+
+    <div id="loading" class="card escondido animado">
+        <div class="bola-girando">🍋</div>
+
+        <h3>Processando...</h3>
+
+        <p class="subtitulo">
+            Estamos registrando sua confirmação.
+        </p>
+    </div>
+
+    <div id="tela3" class="ticket final-card escondido animado">
+
+        <div class="ticket-picote ticket-picote-esquerda"></div>
+        <div class="ticket-picote ticket-picote-direita"></div>
+
+        <div class="ticket-topo">
+            <h3>Carmem Mosqueira</h3>
+            <p>80 anos</p>
+        </div>
+
+        <div class="ticket-info">
+            <span>CONVIDADO</span>
+            <strong id="nomeConfirmado"></strong>
+        </div>
+
+        <div class="resumo-final ticket-resumo" id="resumoFinal"></div>
+
+        <div class="qrcode ticket-qr">
+            <div id="qrImagem"></div>
+        </div>
+
+        <p class="aviso ticket-aviso">
+            Seu nome já está na lista de convidados.<br>
+            Se desejar, tire um print desta tela para apresentar na entrada do evento.
+        </p>
+
+        <button class="ticket-botao" onclick="window.location.href='convite.html'">
+            Voltar ao Convite
+        </button>
+
+    </div>
+
+    <div id="tela4" class="card escondido animado">
+        <div class="topo">💙</div>
+
+        <h3>Resposta registrada</h3>
+
+        <p class="subtitulo">
+            Obrigado por avisar!
+        </p>
+
+        <p id="nomeNaoVai" class="frase"></p>
+    </div>
+
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+<script src="script.js"></script>
+
+</body>
+</html>
