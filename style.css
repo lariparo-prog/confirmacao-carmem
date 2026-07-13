@@ -11,7 +11,7 @@ body{
     display:flex;
     justify-content:center;
     align-items:center;
-    overflow-y:auto;
+    overflow:hidden;
     overflow-x:hidden;
     padding:18px 0;
     color:#243a73;
@@ -19,10 +19,10 @@ body{
 
 .story{
     width:100%;
-    min-height:100vh;
+    height:100vh;
     display:flex;
     justify-content:center;
-    align-items:flex-start;
+    align-items:center;
     padding:8px 14px;
 }
 
