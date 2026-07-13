@@ -23,7 +23,7 @@ body{
     display:flex;
     justify-content:center;
     align-items:flex-start;
-    padding:18px 14px;
+    padding:8px 14px;
 }
 
 .card{
@@ -32,12 +32,12 @@ body{
     background:#fbf7ef;
     border:2px solid #cfae63;
     border-radius:30px;
-    padding:24px 20px;
+    padding:18px 20px;
     text-align:center;
     box-shadow:
         0 18px 38px rgba(95,75,35,.16),
         0 6px 16px rgba(95,75,35,.10);
-    margin:12px auto;
+    margin:0 auto;
 }
 
 .topo{
