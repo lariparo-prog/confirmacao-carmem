@@ -4,35 +4,45 @@
     box-sizing:border-box;
 }
 
+html, body{
+    height:100%;
+}
+
 body{
     font-family: "Georgia", serif;
-    min-height:100vh;
     background:#f9f6ef;
     display:flex;
     justify-content:center;
     align-items:center;
     overflow:hidden;
-    overflow-x:hidden;
-    padding:18px 0;
     color:#243a73;
+
+    /* Fallback pra navegadores sem suporte a dvh */
+    min-height:100vh;
+    /* dvh = altura real visível no celular (resolve o bug do Safari) */
+    min-height:100dvh;
 }
 
 .story{
     width:100%;
-    height:100vh;
     display:flex;
     justify-content:center;
     align-items:center;
-    padding:8px 14px;
+    padding:14px;
+
+    min-height:100vh;
+    min-height:100dvh;
 }
 
 .card{
     width:330px;
-    max-width:86vw;
+    max-width:90vw;
+    max-height:94dvh;
+    overflow-y:auto;
     background:#fbf7ef;
     border:2px solid #cfae63;
     border-radius:30px;
-    padding:18px 20px;
+    padding:20px;
     text-align:center;
     box-shadow:
         0 18px 38px rgba(95,75,35,.16),
@@ -48,41 +58,40 @@ body{
 
 h1{
     color:#cfae63;
-    font-size:34px;
+    font-size:clamp(24px, 8vw, 34px);
     font-family:"Cormorant Garamond", serif;
     font-weight:600;
     text-transform:none;
     font-style:italic;
     margin-bottom:6px;
-    line-height:1;
-    white-space: nowrap;
+    line-height:1.15;
     text-shadow:0 1px 1px rgba(120,90,35,.28);
 }
 
 h2{
     color:#b89343;
-    font-family:"Cormorant Garamound", serif;
-    font-size:25px;
-    margin-top:-8px;
+    font-family:"Cormorant Garamond", serif;
+    font-size:clamp(17px, 5vw, 25px);
+    margin-top:-4px;
     font-weight:600;
 }
 
 .frase{
     color:#243a73;
     font-weight:600;
-    font-size:18px;
-    margin:22px 0;
+    font-size:16px;
+    margin:20px 0;
     line-height:1.35;
 }
 
 input{
     width:100%;
-    padding:15px;
+    padding:14px;
     border:2px solid #cfae63;
     border-radius:18px;
     text-align:center;
-    font-size:17px;
-    margin-bottom:18px;
+    font-size:16px;
+    margin-bottom:14px;
     font-family:"Cormorant Garamond", serif;
     color:#243a73;
     background:#fffdf8;
@@ -94,11 +103,12 @@ button{
     border:2px solid #cfae63;
     padding:13px 24px;
     border-radius:50px;
-    font-size:17px;
+    font-size:16px;
     font-weight:700;
     font-family:"Cormorant Garamond", serif;
     cursor:pointer;
     box-shadow:0 6px 12px rgba(120,90,35,.18);
+    width:100%;
 }
 
 button + button{
@@ -106,10 +116,10 @@ button + button{
 }
 
 .toque{
-    margin-top:22px;
+    margin-top:20px;
     color:#2f3f68;
     font-weight:700;
-    font-size:15px;
+    font-size:14px;
 }
 
 .escondido{
@@ -118,10 +128,10 @@ button + button{
 
 h3{
     color:#cfae63;
-    font-size:28px;
+    font-size:26px;
     text-transform:none;
     margin-bottom:12px;
-    line-height:1.05;
+    line-height:1.1;
     font-family:"Cormorant Garamond", serif;
     font-weight:700;
     text-shadow:0 1px 1px rgba(120,90,35,.20);
@@ -129,27 +139,58 @@ h3{
 
 .subtitulo{
     color:#243a73;
-    font-size:17px;
+    font-size:15px;
     font-weight:600;
     line-height:1.3;
-    margin-bottom:20px;
+    margin-bottom:18px;
+}
+
+/* Lista de resultados da busca: some se vazia, rola só ela mesma se crescer muito */
+#listaConvidados{
+    max-height:22vh;
+    overflow-y:auto;
+    margin-bottom:14px;
+    text-align:left;
+}
+
+#listaConvidados:empty{
+    margin-bottom:0;
+}
+
+#listaConvidados button{
+    display:block;
+    width:100%;
+    background:#fffdf8;
+    color:#243a73;
+    border:2px solid #cfae63;
+    border-radius:14px;
+    padding:10px 14px;
+    font-size:15px;
+    font-weight:600;
+    margin-bottom:8px;
+    box-shadow:none;
+    text-align:left;
+}
+
+#listaConvidados button:last-child{
+    margin-bottom:0;
 }
 
 .contador{
     background:#fffdf8;
     border:2px solid #cfae63;
     border-radius:20px;
-    padding:16px 14px;
-    margin:16px 0;
+    padding:14px;
+    margin:14px 0;
 }
 
 .contador span{
     display:block;
     color:#b89343;
-    font-size:16px;
+    font-size:15px;
     font-weight:700;
     text-transform:none;
-    margin-bottom:12px;
+    margin-bottom:10px;
 }
 
 .controle{
@@ -161,21 +202,21 @@ h3{
 
 .controle strong{
     color:#243a73;
-    font-size:32px;
+    font-size:30px;
     min-width:30px;
 }
 
 .botao-contador{
-    width:48px;
-    height:48px;
+    width:44px;
+    height:44px;
     padding:0;
     border-radius:50%;
-    font-size:26px;
+    font-size:24px;
 }
 
 .bola-girando{
-    font-size:56px;
-    margin-bottom:20px;
+    font-size:52px;
+    margin-bottom:16px;
     animation:girar 1.2s linear infinite;
 }
 
@@ -189,15 +230,16 @@ h3{
 .ticket{
     position:relative;
     width:340px;
-    max-width:86vw;
-    min-height:610px;
+    max-width:90vw;
+    max-height:94dvh;
+    overflow-y:auto;
+    overflow-x:hidden;
     background:#fbf7ef;
     border:2px solid #cfae63;
     border-radius:28px;
-    padding:0 18px 22px;
-    margin:26px auto;
+    padding:0 18px 20px;
+    margin:0 auto;
     text-align:center;
-    overflow:hidden;
     box-shadow:
         0 20px 42px rgba(95,75,35,.16),
         0 8px 18px rgba(95,75,35,.10);
@@ -210,8 +252,8 @@ h3{
 .ticket-topo{
     background:#f4dfad;
     color:#243a73;
-    margin:0 -18px 20px;
-    padding:36px 18px 28px;
+    margin:0 -18px 18px;
+    padding:26px 18px 22px;
 
     border-bottom:3px solid #d4af37;
 
@@ -223,24 +265,16 @@ h3{
 
 .ticket-label{
     display:none;
-    background:linear-gradient(180deg,#d8bd75,#b89343);
-    color:#fffdf8;
-    padding:6px 14px;
-    border-radius:30px;
-    font-size:12px;
-    font-weight:700;
-    letter-spacing:.5px;
-    margin-bottom:12px;
 }
 
 .ticket-topo h3{
     color:#8b6a1f;
-    font-size:36px;
+    font-size:clamp(24px, 8vw, 32px);
     margin-bottom:2px;
     text-transform:none;
     font-style:italic;
     font-weight:700;
-    line-height:1;
+    line-height:1.1;
 
     text-shadow:
         0 1px 0 #fff7d6,
@@ -250,7 +284,7 @@ h3{
 
 .ticket-topo p{
     color:#7f6322;
-    font-size:24px;
+    font-size:clamp(16px, 5vw, 22px);
     font-weight:700;
     margin-top:2px;
     letter-spacing:.5px;
@@ -271,23 +305,23 @@ h3{
     background:#fffdf8;
     border:2px solid #cfae63;
     border-radius:18px;
-    padding:13px;
-    margin-bottom:14px;
+    padding:12px;
+    margin-bottom:12px;
 }
 
 .ticket-info span{
     display:block;
     color:#8b6a1f;
-    font-size:15px;
+    font-size:13px;
     font-weight:700;
     text-transform:uppercase;
-    margin-bottom:6px;
-    letter-spacing:.8px;
+    margin-bottom:5px;
+    letter-spacing:.6px;
 }
 
 .ticket-info strong{
     color:#b89343;
-    font-size:24px;
+    font-size:22px;
     font-weight:700;
 }
 
@@ -295,21 +329,21 @@ h3{
     background:#fffdf8;
     border:2px solid #cfae63;
     border-radius:18px;
-    padding:12px;
-    margin-bottom:16px;
+    padding:11px;
+    margin-bottom:14px;
     color:#b89343;
-    font-size:16px;
+    font-size:15px;
     font-weight:700;
 }
 
 .ticket-resumo{
-    margin-bottom:12px;
+    margin-bottom:10px;
 }
 
 .ticket-qr{
-    width:200px;
-    height:200px;
-    margin:8px auto 10px;
+    width:190px;
+    height:190px;
+    margin:6px auto 10px;
     background:white;
     border:2px solid #cfae63;
     padding:6px;
@@ -340,7 +374,7 @@ h3{
 
 .ticket-aviso{
     color:#243a73;
-    font-size:15px;
+    font-size:14px;
     font-weight:600;
     margin-bottom:10px;
     line-height:1.35;
@@ -349,8 +383,13 @@ h3{
 .ticket-botao{
     display:block;
     margin:0 auto;
-    padding:10px 18px;
+    padding:12px 24px;
     font-size:15px;
+    background:#ead8a5;
+    color:#6f5530 !important;
+    border:2px solid #d4af37 !important;
+    border-radius:30px;
+    box-shadow:0 4px 12px rgba(184,147,67,.20);
 }
 
 .ticket-botao + .ticket-botao{
@@ -370,7 +409,7 @@ h3{
     border:2px solid #d4af37;
     padding:12px 32px;
     border-radius:22px;
-    font-size:20px;
+    font-size:18px;
     font-weight:700;
     min-width:180px;
     text-align:center;
@@ -406,7 +445,7 @@ h3{
 
 .resumo-admin-grid span{
     color:#243a73;
-    font-size:13px;
+    font-size:12px;
     font-weight:700;
 }
 
@@ -428,20 +467,20 @@ h3{
     display:block;
     color:#b89343;
     font-weight:700;
-    font-size:14px;
+    font-size:13px;
     margin-bottom:4px;
 }
 
 #listaConfirmados .convidado strong{
     display:block;
     color:#243a73;
-    font-size:18px;
+    font-size:17px;
     margin-bottom:6px;
 }
 
 #listaConfirmados .convidado p{
     color:#243a73;
-    font-size:14px;
+    font-size:13px;
     margin:3px 0;
     line-height:1.4;
 }
@@ -450,73 +489,3 @@ h3{
     margin-top:16px;
     margin-bottom:12px;
 }
-
-@media (max-width:430px){
-
-    body{
-        padding:12px 0;
-    }
-
-    .story{
-        padding:12px;
-    }
-
-    .card{
-        width:330px;
-        max-width:86vw;
-        padding:22px 18px;
-        margin:12px auto;
-    }
-
-    h1{
-        font-size:36px;
-        white-space: nowrap;
-    }
-
-    h2{
-        font-size:24px;
-    }
-
-    .frase{
-        font-size:18px;
-    }
-
-    input{
-        font-size:22px;
-    }
-
-    button{
-        font-size:17px;
-    }
-
-    .ticket{
-        width:340px;
-        max-width:88vw;
-        min-height:610px;
-    }
-
-    .ticket-topo h3{
-        font-size:28px;
-    }
-
-    .ticket-qr{
-        width:190px;
-        height:190px;
-    }
-
-    .ticket-botao{
-        font-size:16px;
-        padding:12px 28px;
-        border-radius:30px;
-    }
-    .ticket-botao{
-    background:#ead8a5;
-    color:#6f5530 !important;
-    border:2px solid #d4af37 !important;
-    border-radius:30px;
-    padding:12px 28px;
-    font-size:16px;
-    box-shadow:0 4px 12px rgba(184,147,67,.20);
-} 
-
-} 
