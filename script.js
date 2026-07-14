@@ -7,19 +7,21 @@ let quantidadeAdultos = 1;
 let quantidadeCriancas = 0;
 let codigoConvidado = "";
 let convidadoEscolhido = null;
-let tempoBusca = null;
-let numeroDaBusca = 0;
+
+// Lista completa de convidados, carregada 1x quando a página abre.
+// A busca depois é feita em cima dela, sem chamar o Google de novo.
+let todosOsConvidados = [];
+let listaCarregada = false;
 
 window.onload = function () {
     const busca = document.getElementById("buscaNome");
 
     if (busca) {
-        busca.addEventListener("input", function () {
-            clearTimeout(tempoBusca);
+        // Carrega a lista inteira assim que a tela abre
+        carregarTodosConvidados();
 
-            tempoBusca = setTimeout(function () {
-                buscarConvidados();
-            }, 100);
+        busca.addEventListener("input", function () {
+            filtrarConvidados();
         });
     }
 };
@@ -34,9 +36,29 @@ function mostrarTela(idTela) {
     document.getElementById(idTela).classList.remove("escondido");
 }
 
-async function buscarConvidados() {
-    const buscaAtual = ++numeroDaBusca;
-    const texto = document.getElementById("buscaNome").value.trim();
+async function carregarTodosConvidados() {
+    const area = document.getElementById("listaConvidados");
+
+    try {
+        const resposta = await fetch(API_URL + "?acao=buscarConvidados&nome=");
+        const dados = await resposta.json();
+
+        if (dados.sucesso && dados.convidados) {
+            todosOsConvidados = dados.convidados;
+        }
+
+        listaCarregada = true;
+    } catch (erro) {
+        listaCarregada = false;
+
+        if (area) {
+            area.innerHTML = "<p class='subtitulo'>Não foi possível carregar a lista. Verifique sua internet e recarregue a página.</p>";
+        }
+    }
+}
+
+function filtrarConvidados() {
+    const texto = document.getElementById("buscaNome").value.trim().toLowerCase();
     const area = document.getElementById("listaConvidados");
 
     area.innerHTML = "";
@@ -45,52 +67,45 @@ async function buscarConvidados() {
     document.getElementById("convidadoSelecionado").classList.add("escondido");
     document.getElementById("convidadoSelecionado").innerHTML = "";
 
+    if (!listaCarregada) {
+        area.innerHTML = "<p class='subtitulo'>Carregando lista de convidados...</p>";
+        return;
+    }
+
     if (texto.length < 2) {
         return;
     }
 
-    try {
-        const resposta = await fetch(API_URL + "?acao=buscarConvidados&nome=" + encodeURIComponent(texto));
-        const dados = await resposta.json();
+    const resultado = todosOsConvidados.filter(function (item) {
+        return String(item.nome || "").toLowerCase().includes(texto);
+    });
 
-        if (buscaAtual !== numeroDaBusca) {
-            return;
-        }
-
-        area.innerHTML = "";
-
-        if (!dados.sucesso || !dados.convidados || dados.convidados.length === 0) {
-            area.innerHTML = "<p class='subtitulo'>Nenhum convidado encontrado.</p>";
-            return;
-        }
-
-        const chaves = new Set();
-
-        dados.convidados.forEach(function (item) {
-            const chave = String(item.codigo || "").trim();
-
-            if (chaves.has(chave)) {
-                return;
-            }
-
-            chaves.add(chave);
-
-            const botao = document.createElement("button");
-            botao.type = "button";
-            botao.innerHTML = item.nome;
-
-            botao.onclick = function () {
-                escolherConvidado(item);
-            };
-
-            area.appendChild(botao);
-        });
-
-    } catch (erro) {
-        if (buscaAtual === numeroDaBusca) {
-            area.innerHTML = "<p class='subtitulo'>Erro ao buscar convidados.</p>";
-        }
+    if (resultado.length === 0) {
+        area.innerHTML = "<p class='subtitulo'>Nenhum convidado encontrado.</p>";
+        return;
     }
+
+    const chaves = new Set();
+
+    resultado.forEach(function (item) {
+        const chave = String(item.codigo || "").trim();
+
+        if (chaves.has(chave)) {
+            return;
+        }
+
+        chaves.add(chave);
+
+        const botao = document.createElement("button");
+        botao.type = "button";
+        botao.innerHTML = item.nome;
+
+        botao.onclick = function () {
+            escolherConvidado(item);
+        };
+
+        area.appendChild(botao);
+    });
 }
 
 function escolherConvidado(item) {
