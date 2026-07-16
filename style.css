@@ -101,7 +101,7 @@ input{
 
 button{
     background:linear-gradient(180deg,#e2c988,#a97f38);
-    color:#243a73;
+    color:#3f2c10;
     border:2px solid #cfae63;
     padding:15px 24px;
     border-radius:50px;
@@ -194,6 +194,10 @@ h3{
     font-weight:700;
     text-transform:none;
     margin-bottom:10px;
+}
+
+.contador strong{
+    color:#8b6a1f;
 }
 
 .controle{
