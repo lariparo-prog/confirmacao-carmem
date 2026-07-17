@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Carmem Mosqueira - 80 anos</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,600&display=swap" rel="stylesheet">
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html, body{
+    height:100%;
+    overflow:hidden;
+    background:#f3ead9;
+}
+
+.tela{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.tela img{
+    height:100%;
+    width:auto;
+    max-width:100%;
+    object-fit:contain;
+    display:block;
+    user-select:none;
+    -webkit-user-drag:none;
+}
+
+/* TELA 1 - SELO */
+
+#telaSelo{
+    z-index:3;
+    cursor:pointer;
+}
+
+#telaSelo.tocado{
+    animation:sumirSelo .6s ease-in forwards .9s;
+}
+
+@keyframes sumirSelo{
+    to{ opacity:0; visibility:hidden; }
+}
+
+/* TELA 2 - CONVITE (fica por baixo, revelada depois da fumaça) */
+
+#telaConvite{
+    z-index:1;
+}
+
+.icone-toque{
+    position:absolute;
+    cursor:pointer;
+}
+
+/* FUMAÇA DOURADA */
+
+#camadaFumaca{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    z-index:5;
+    pointer-events:none;
+    opacity:0;
+}
+
+#camadaFumaca.ativa{
+    opacity:1;
+    animation:sumirFumacaCamada 1.7s ease-out forwards;
+}
+
+@keyframes sumirFumacaCamada{
+    0%{ opacity:1; }
+    70%{ opacity:1; }
+    100%{ opacity:0; }
+}
+
+.nuvem{
+    position:absolute;
+    border-radius:50%;
+    background:radial-gradient(circle, rgba(232,197,120,0.95) 0%, rgba(212,175,55,0.55) 40%, rgba(212,175,55,0) 72%);
+    filter:blur(6px);
+    opacity:0;
+    transform:scale(.3);
+}
+
+#camadaFumaca.ativa .nuvem{
+    animation:crescerNuvem 1.6s ease-out forwards;
+}
+
+@keyframes crescerNuvem{
+    0%{
+        opacity:0;
+        transform:scale(.2) translateY(0);
+    }
+    18%{
+        opacity:.95;
+    }
+    100%{
+        opacity:0;
+        transform:scale(2.6) translateY(-60px);
+    }
+}
+
+.n1{ width:260px; height:260px; left:50%; top:50%; margin:-130px 0 0 -130px; animation-delay:0s !important; }
+.n2{ width:200px; height:200px; left:30%; top:55%; margin:-100px 0 0 -100px; animation-delay:.08s !important; }
+.n3{ width:220px; height:220px; left:70%; top:48%; margin:-110px 0 0 -110px; animation-delay:.15s !important; }
+.n4{ width:170px; height:170px; left:42%; top:35%; margin:-85px 0 0 -85px; animation-delay:.22s !important; }
+.n5{ width:190px; height:190px; left:62%; top:65%; margin:-95px 0 0 -95px; animation-delay:.12s !important; }
+.n6{ width:150px; height:150px; left:22%; top:38%; margin:-75px 0 0 -75px; animation-delay:.3s !important; }
+.n7{ width:150px; height:150px; left:78%; top:32%; margin:-75px 0 0 -75px; animation-delay:.26s !important; }
+
+.particula{
+    position:absolute;
+    width:5px;
+    height:5px;
+    border-radius:50%;
+    background:#f6e2a0;
+    box-shadow:0 0 8px 2px rgba(246,226,160,.9);
+    opacity:0;
+}
+
+#camadaFumaca.ativa .particula{
+    animation:subirParticula 1.9s ease-out forwards;
+}
+
+@keyframes subirParticula{
+    0%{ opacity:0; transform:translateY(0) scale(.6); }
+    15%{ opacity:1; }
+    100%{ opacity:0; transform:translateY(-220px) scale(1.4); }
+}
+
+#textoEspecial{
+    position:fixed;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%) scale(.85);
+    z-index:6;
+    font-family:"Cormorant Garamond", serif;
+    font-style:italic;
+    font-weight:600;
+    font-size:clamp(62px, 19vw, 108px);
+    line-height:0.8;
+    text-align:center;
+    background:linear-gradient(180deg, #e7ce87 0%, #c5a15b 45%, #aa8838 100%);
+    -webkit-background-clip:text;
+    background-clip:text;
+    -webkit-text-fill-color:transparent;
+    color:#c5a15b;
+    filter:drop-shadow(0 0 14px rgba(255,250,225,.85)) drop-shadow(0 3px 6px rgba(90,65,20,.45));
+    opacity:0;
+    pointer-events:none;
+    width:94%;
+}
+
+#camadaFumaca.ativa #textoEspecial{
+    animation:apareceTextoEspecial 1.7s ease-out forwards;
+}
+
+@keyframes apareceTextoEspecial{
+    0%{ opacity:0; transform:translate(-50%,-50%) scale(.85); }
+    22%{ opacity:0; }
+    38%{ opacity:1; transform:translate(-50%,-50%) scale(1); }
+    68%{ opacity:1; transform:translate(-50%,-50%) scale(1); }
+    100%{ opacity:0; transform:translate(-50%,-50%) scale(1.08); }
+}
+</style>
+</head>
+<body>
+
+<div id="telaConvite" class="tela">
+    <img src="convite.png" id="imgConvite">
+
+    <div class="icone-toque" id="btnConfirmar" onclick="window.location.href='index.html'"></div>
+    <div class="icone-toque" id="btnPresente" onclick="window.location.href='presentes.html'"></div>
+    <div class="icone-toque" id="btnLocal" onclick="window.open('https://www.google.com/maps/search/?api=1&query=Rua+Manoel+Dias+de+Pinho%2C+22%2C+Ponta+Por%C3%A3%2C+MS','_blank')"></div>
+</div>
+
+<div id="camadaFumaca">
+    <div class="nuvem n1"></div>
+    <div class="nuvem n2"></div>
+    <div class="nuvem n3"></div>
+    <div class="nuvem n4"></div>
+    <div class="nuvem n5"></div>
+    <div class="nuvem n6"></div>
+    <div class="nuvem n7"></div>
+
+    <div class="particula" style="left:35%; top:60%; animation-delay:.1s;"></div>
+    <div class="particula" style="left:55%; top:55%; animation-delay:.25s;"></div>
+    <div class="particula" style="left:45%; top:45%; animation-delay:.4s;"></div>
+    <div class="particula" style="left:65%; top:62%; animation-delay:.15s;"></div>
+    <div class="particula" style="left:40%; top:50%; animation-delay:.5s;"></div>
+    <div class="particula" style="left:60%; top:40%; animation-delay:.3s;"></div>
+    <div class="particula" style="left:50%; top:65%; animation-delay:.05s;"></div>
+    <div class="particula" style="left:30%; top:48%; animation-delay:.45s;"></div>
+
+    <div id="textoEspecial">Convite<br>Especial</div>
+</div>
+
+<div id="telaSelo" class="tela" onclick="abrirConvite()">
+    <img src="selo.png">
+</div>
+
+<script>
+function posicionarBotoes(){
+    const img = document.getElementById('imgConvite');
+    const rect = img.getBoundingClientRect();
+
+    // Percentuais medidos sobre a arte original (941 x 1672)
+    const zonas = [
+        { id:'btnConfirmar', leftPct:13.9, topPct:75.9, widthPct:21.3, heightPct:13.5 },
+        { id:'btnPresente',  leftPct:38.5, topPct:75.9, widthPct:21.3, heightPct:13.5 },
+        { id:'btnLocal',     leftPct:62.4, topPct:75.9, widthPct:21.3, heightPct:13.5 }
+    ];
+
+    zonas.forEach(function(z){
+        const el = document.getElementById(z.id);
+        el.style.left = (rect.left + rect.width * z.leftPct/100) + 'px';
+        el.style.top = (rect.top + rect.height * z.topPct/100) + 'px';
+        el.style.width = (rect.width * z.widthPct/100) + 'px';
+        el.style.height = (rect.height * z.heightPct/100) + 'px';
+    });
+}
+
+window.addEventListener('load', posicionarBotoes);
+window.addEventListener('resize', posicionarBotoes);
+
+let jaAbriu = false;
+
+function abrirConvite(){
+    if (jaAbriu) return;
+    jaAbriu = true;
+
+    const selo = document.getElementById('telaSelo');
+    const fumaca = document.getElementById('camadaFumaca');
+
+    fumaca.classList.add('ativa');
+    selo.classList.add('tocado');
+}
+</script>
+
+</body>
+</html>
