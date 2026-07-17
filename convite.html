@@ -39,23 +39,6 @@ html, body{
     -webkit-user-drag:none;
 }
 
-/* TELA 1 - SELO */
-
-#telaSelo{
-    z-index:3;
-    cursor:pointer;
-}
-
-#telaSelo.tocado{
-    animation:sumirSelo .8s ease-in forwards 1.6s;
-}
-
-@keyframes sumirSelo{
-    to{ opacity:0; visibility:hidden; }
-}
-
-/* TELA 2 - CONVITE (fica por baixo, revelada depois da fumaça) */
-
 #telaConvite{
     z-index:1;
 }
@@ -65,7 +48,105 @@ html, body{
     cursor:pointer;
 }
 
-/* FUMAÇA DOURADA */
+#camadaSelo{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    z-index:10;
+    cursor:pointer;
+}
+
+.porta{
+    position:absolute;
+    top:0;
+    height:100%;
+    width:50%;
+    overflow:hidden;
+}
+
+.porta img{
+    position:absolute;
+    top:0;
+    height:100%;
+    width:auto;
+    max-width:none;
+    display:block;
+    user-select:none;
+    -webkit-user-drag:none;
+}
+
+#portaEsquerda{ left:0; }
+#portaEsquerda img{ right:0; }
+#portaDireita{ right:0; }
+#portaDireita img{ left:0; }
+
+#brilhoSelo{
+    position:fixed;
+    left:48%;
+    top:66%;
+    width:36vh;
+    height:36vh;
+    transform:translate(-50%,-50%) scale(.6);
+    border-radius:50%;
+    background:radial-gradient(circle, rgba(255,241,196,0.95) 0%, rgba(232,197,120,0.6) 45%, rgba(212,175,55,0) 75%);
+    z-index:9;
+    opacity:0;
+    pointer-events:none;
+}
+
+#camadaSelo.tocado #brilhoSelo{
+    animation:pulsoSelo .8s ease-in-out forwards;
+}
+
+@keyframes pulsoSelo{
+    0%{ opacity:0; transform:translate(-50%,-50%) scale(.5); }
+    50%{ opacity:1; transform:translate(-50%,-50%) scale(1.15); }
+    100%{ opacity:.9; transform:translate(-50%,-50%) scale(1); }
+}
+
+#camadaSelo.tocado #portaEsquerda{
+    animation:abrirEsquerda 2.7s cubic-bezier(.65,0,.35,1) forwards .8s;
+}
+
+#camadaSelo.tocado #portaDireita{
+    animation:abrirDireita 2.7s cubic-bezier(.65,0,.35,1) forwards .8s;
+}
+
+@keyframes abrirEsquerda{
+    0%{ transform:translateX(0); }
+    100%{ transform:translateX(-105%); }
+}
+
+@keyframes abrirDireita{
+    0%{ transform:translateX(0); }
+    100%{ transform:translateX(105%); }
+}
+
+#luzAbertura{
+    position:fixed;
+    left:50%;
+    top:50%;
+    width:40vh;
+    height:40vh;
+    transform:translate(-50%,-50%) scale(0);
+    border-radius:50%;
+    background:radial-gradient(circle, rgba(255,247,214,1) 0%, rgba(232,197,120,0.85) 40%, rgba(212,175,55,0) 74%);
+    z-index:8;
+    opacity:0;
+    pointer-events:none;
+}
+
+.ativo #luzAbertura{
+    animation:crescerLuz 3.2s ease-out forwards .8s;
+}
+
+@keyframes crescerLuz{
+    0%{ opacity:0; transform:translate(-50%,-50%) scale(.3); }
+    35%{ opacity:1; }
+    100%{ opacity:0; transform:translate(-50%,-50%) scale(3.4); }
+}
 
 #camadaFumaca{
     position:fixed;
@@ -73,20 +154,13 @@ html, body{
     left:0;
     width:100%;
     height:100%;
-    z-index:5;
+    z-index:6;
     pointer-events:none;
     opacity:0;
 }
 
 #camadaFumaca.ativa{
     opacity:1;
-    animation:sumirFumacaCamada 3.8s ease-out forwards;
-}
-
-@keyframes sumirFumacaCamada{
-    0%{ opacity:1; }
-    70%{ opacity:1; }
-    100%{ opacity:0; }
 }
 
 .nuvem{
@@ -98,31 +172,23 @@ html, body{
     transform:scale(.3);
 }
 
-#camadaFumaca.ativa .nuvem{
-    animation:crescerNuvem 3.4s ease-out forwards;
+.ativa .nuvem{
+    animation:crescerNuvem 2.2s ease-out forwards;
 }
 
 @keyframes crescerNuvem{
-    0%{
-        opacity:0;
-        transform:scale(.2) translateY(0);
-    }
-    18%{
-        opacity:.95;
-    }
-    100%{
-        opacity:0;
-        transform:scale(2.6) translateY(-60px);
-    }
+    0%{ opacity:0; transform:scale(.2) translateY(0); }
+    18%{ opacity:.95; }
+    100%{ opacity:0; transform:scale(2.4) translateY(-55px); }
 }
 
-.n1{ width:260px; height:260px; left:50%; top:50%; margin:-130px 0 0 -130px; animation-delay:0s !important; }
-.n2{ width:200px; height:200px; left:30%; top:55%; margin:-100px 0 0 -100px; animation-delay:.08s !important; }
-.n3{ width:220px; height:220px; left:70%; top:48%; margin:-110px 0 0 -110px; animation-delay:.15s !important; }
-.n4{ width:170px; height:170px; left:42%; top:35%; margin:-85px 0 0 -85px; animation-delay:.22s !important; }
-.n5{ width:190px; height:190px; left:62%; top:65%; margin:-95px 0 0 -95px; animation-delay:.12s !important; }
-.n6{ width:150px; height:150px; left:22%; top:38%; margin:-75px 0 0 -75px; animation-delay:.3s !important; }
-.n7{ width:150px; height:150px; left:78%; top:32%; margin:-75px 0 0 -75px; animation-delay:.26s !important; }
+.n1{ width:260px; height:260px; left:50%; top:50%; margin:-130px 0 0 -130px; animation-delay:3.5s !important; }
+.n2{ width:200px; height:200px; left:30%; top:55%; margin:-100px 0 0 -100px; animation-delay:3.58s !important; }
+.n3{ width:220px; height:220px; left:70%; top:48%; margin:-110px 0 0 -110px; animation-delay:3.65s !important; }
+.n4{ width:170px; height:170px; left:42%; top:35%; margin:-85px 0 0 -85px; animation-delay:3.72s !important; }
+.n5{ width:190px; height:190px; left:62%; top:65%; margin:-95px 0 0 -95px; animation-delay:3.62s !important; }
+.n6{ width:150px; height:150px; left:22%; top:38%; margin:-75px 0 0 -75px; animation-delay:3.8s !important; }
+.n7{ width:150px; height:150px; left:78%; top:32%; margin:-75px 0 0 -75px; animation-delay:3.76s !important; }
 
 .particula{
     position:absolute;
@@ -134,14 +200,14 @@ html, body{
     opacity:0;
 }
 
-#camadaFumaca.ativa .particula{
-    animation:subirParticula 4s ease-out forwards;
+.ativa .particula{
+    animation:subirParticula 2.4s ease-out forwards;
 }
 
 @keyframes subirParticula{
     0%{ opacity:0; transform:translateY(0) scale(.6); }
     15%{ opacity:1; }
-    100%{ opacity:0; transform:translateY(-220px) scale(1.4); }
+    100%{ opacity:0; transform:translateY(-200px) scale(1.4); }
 }
 
 #textoEspecial{
@@ -149,7 +215,7 @@ html, body{
     top:50%;
     left:50%;
     transform:translate(-50%,-50%) scale(.85);
-    z-index:6;
+    z-index:7;
     font-family:"Cormorant Garamond", serif;
     font-style:italic;
     font-weight:600;
@@ -167,16 +233,29 @@ html, body{
     width:94%;
 }
 
-#camadaFumaca.ativa #textoEspecial{
-    animation:apareceTextoEspecial 3.8s ease-out forwards;
+.ativo #textoEspecial{
+    animation:apareceTextoEspecial 2.5s ease-out forwards 4.3s;
 }
 
 @keyframes apareceTextoEspecial{
     0%{ opacity:0; transform:translate(-50%,-50%) scale(.85); }
-    18%{ opacity:0; }
-    30%{ opacity:1; transform:translate(-50%,-50%) scale(1); }
+    16%{ opacity:1; transform:translate(-50%,-50%) scale(1); }
     72%{ opacity:1; transform:translate(-50%,-50%) scale(1); }
     100%{ opacity:0; transform:translate(-50%,-50%) scale(1.08); }
+}
+
+.ativo #camadaSelo,
+.ativo #camadaFumaca,
+.ativo #luzAbertura{
+    animation-name: sumirTudoFinal;
+    animation-duration: .7s;
+    animation-timing-function: ease-in;
+    animation-fill-mode: forwards;
+    animation-delay: 5.3s;
+}
+
+@keyframes sumirTudoFinal{
+    to{ opacity:0; visibility:hidden; }
 }
 </style>
 </head>
@@ -190,6 +269,8 @@ html, body{
     <div class="icone-toque" id="btnLocal" onclick="window.open('https://www.google.com/maps/search/?api=1&query=Rua+Manoel+Dias+de+Pinho%2C+22%2C+Ponta+Por%C3%A3%2C+MS','_blank')"></div>
 </div>
 
+<div id="luzAbertura"></div>
+
 <div id="camadaFumaca">
     <div class="nuvem n1"></div>
     <div class="nuvem n2"></div>
@@ -199,20 +280,22 @@ html, body{
     <div class="nuvem n6"></div>
     <div class="nuvem n7"></div>
 
-    <div class="particula" style="left:35%; top:60%; animation-delay:.1s;"></div>
-    <div class="particula" style="left:55%; top:55%; animation-delay:.25s;"></div>
-    <div class="particula" style="left:45%; top:45%; animation-delay:.4s;"></div>
-    <div class="particula" style="left:65%; top:62%; animation-delay:.15s;"></div>
-    <div class="particula" style="left:40%; top:50%; animation-delay:.5s;"></div>
-    <div class="particula" style="left:60%; top:40%; animation-delay:.3s;"></div>
-    <div class="particula" style="left:50%; top:65%; animation-delay:.05s;"></div>
-    <div class="particula" style="left:30%; top:48%; animation-delay:.45s;"></div>
-
-    <div id="textoEspecial">Convite<br>Especial</div>
+    <div class="particula" style="left:35%; top:60%; animation-delay:3.6s;"></div>
+    <div class="particula" style="left:55%; top:55%; animation-delay:3.75s;"></div>
+    <div class="particula" style="left:45%; top:45%; animation-delay:3.9s;"></div>
+    <div class="particula" style="left:65%; top:62%; animation-delay:3.65s;"></div>
+    <div class="particula" style="left:40%; top:50%; animation-delay:4s;"></div>
+    <div class="particula" style="left:60%; top:40%; animation-delay:3.8s;"></div>
+    <div class="particula" style="left:50%; top:65%; animation-delay:3.55s;"></div>
+    <div class="particula" style="left:30%; top:48%; animation-delay:3.95s;"></div>
 </div>
 
-<div id="telaSelo" class="tela" onclick="abrirConvite()">
-    <img src="selo.png">
+<div id="textoEspecial">Convite<br>Especial</div>
+
+<div id="camadaSelo" onclick="abrirConvite()">
+    <div id="brilhoSelo"></div>
+    <div class="porta" id="portaEsquerda"><img src="selo-esquerda.png"></div>
+    <div class="porta" id="portaDireita"><img src="selo-direita.png"></div>
 </div>
 
 <script>
@@ -220,7 +303,6 @@ function posicionarBotoes(){
     const img = document.getElementById('imgConvite');
     const rect = img.getBoundingClientRect();
 
-    // Percentuais medidos sobre a arte original (941 x 1672)
     const zonas = [
         { id:'btnConfirmar', leftPct:13.9, topPct:75.9, widthPct:21.3, heightPct:13.5 },
         { id:'btnPresente',  leftPct:38.5, topPct:75.9, widthPct:21.3, heightPct:13.5 },
@@ -245,11 +327,9 @@ function abrirConvite(){
     if (jaAbriu) return;
     jaAbriu = true;
 
-    const selo = document.getElementById('telaSelo');
-    const fumaca = document.getElementById('camadaFumaca');
-
-    fumaca.classList.add('ativa');
-    selo.classList.add('tocado');
+    document.getElementById('camadaSelo').classList.add('tocado');
+    document.getElementById('camadaFumaca').classList.add('ativa');
+    document.body.classList.add('ativo');
 }
 </script>
 
