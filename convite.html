@@ -47,7 +47,7 @@ html, body{
 }
 
 #telaSelo.tocado{
-    animation:sumirSelo .6s ease-in forwards .9s;
+    animation:sumirSelo .8s ease-in forwards 1.6s;
 }
 
 @keyframes sumirSelo{
@@ -80,7 +80,7 @@ html, body{
 
 #camadaFumaca.ativa{
     opacity:1;
-    animation:sumirFumacaCamada 1.7s ease-out forwards;
+    animation:sumirFumacaCamada 3.8s ease-out forwards;
 }
 
 @keyframes sumirFumacaCamada{
@@ -99,7 +99,7 @@ html, body{
 }
 
 #camadaFumaca.ativa .nuvem{
-    animation:crescerNuvem 1.6s ease-out forwards;
+    animation:crescerNuvem 3.4s ease-out forwards;
 }
 
 @keyframes crescerNuvem{
@@ -135,7 +135,7 @@ html, body{
 }
 
 #camadaFumaca.ativa .particula{
-    animation:subirParticula 1.9s ease-out forwards;
+    animation:subirParticula 4s ease-out forwards;
 }
 
 @keyframes subirParticula{
@@ -168,14 +168,14 @@ html, body{
 }
 
 #camadaFumaca.ativa #textoEspecial{
-    animation:apareceTextoEspecial 1.7s ease-out forwards;
+    animation:apareceTextoEspecial 3.8s ease-out forwards;
 }
 
 @keyframes apareceTextoEspecial{
     0%{ opacity:0; transform:translate(-50%,-50%) scale(.85); }
-    22%{ opacity:0; }
-    38%{ opacity:1; transform:translate(-50%,-50%) scale(1); }
-    68%{ opacity:1; transform:translate(-50%,-50%) scale(1); }
+    18%{ opacity:0; }
+    30%{ opacity:1; transform:translate(-50%,-50%) scale(1); }
+    72%{ opacity:1; transform:translate(-50%,-50%) scale(1); }
     100%{ opacity:0; transform:translate(-50%,-50%) scale(1.08); }
 }
 </style>
