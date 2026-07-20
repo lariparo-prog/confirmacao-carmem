@@ -39,13 +39,15 @@ html, body{
     -webkit-user-drag:none;
 }
 
+/* CONVITE DE FUNDO (só aparece no final) */
+
 #telaConvite{
     z-index:1;
     opacity:0;
 }
 
 .ativo #telaConvite{
-    animation:revelarConvite .8s ease-out forwards 5.3s;
+    animation:revelarConvite .9s ease-out forwards 4.0s;
 }
 
 @keyframes revelarConvite{
@@ -55,230 +57,114 @@ html, body{
 .icone-toque{
     position:absolute;
     cursor:pointer;
+    pointer-events:none;
 }
 
-#camadaSelo{
-    position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
+body.pronto .icone-toque{
+    pointer-events:auto;
+}
+
+/* SELO */
+
+#telaSelo{
     z-index:10;
     cursor:pointer;
-    perspective:1400px;
 }
 
-.porta{
-    position:absolute;
-    top:0;
-    height:100%;
-    width:50%;
-    overflow:hidden;
+.ativo #telaSelo{
+    animation:sumirSelo .8s ease-in forwards .6s;
 }
 
-.porta img{
-    position:absolute;
-    top:0;
-    height:100%;
-    width:auto;
-    max-width:none;
-    display:block;
-    user-select:none;
-    -webkit-user-drag:none;
-}
-
-#portaEsquerda{
-    left:0;
-    transform-origin: left center;
-    transform-style: preserve-3d;
-    box-shadow: 8px 0 30px rgba(0,0,0,0);
-}
-#portaEsquerda img{ right:0; }
-#portaDireita{
-    right:0;
-    transform-origin: right center;
-    transform-style: preserve-3d;
-}
-#portaDireita img{ left:0; }
-
-#camadaSelo.tocado #portaEsquerda{
-    animation:abrirEsquerda 2.7s cubic-bezier(.6,0,.4,1) forwards .8s;
-    box-shadow: 10px 0 40px rgba(80,60,20,.35);
-}
-
-#camadaSelo.tocado #portaDireita{
-    animation:abrirDireita 2.7s cubic-bezier(.6,0,.4,1) forwards .8s;
-    box-shadow: -10px 0 40px rgba(80,60,20,.35);
-}
-
-@keyframes abrirEsquerda{
-    0%{ transform:rotateY(0deg) translateZ(0); }
-    55%{ transform:rotateY(-115deg) translateZ(40px); }
-    100%{ transform:rotateY(-115deg) translateZ(40px) translateX(-8%); opacity:0; }
-}
-
-@keyframes abrirDireita{
-    0%{ transform:rotateY(0deg) translateZ(0); }
-    55%{ transform:rotateY(115deg) translateZ(40px); }
-    100%{ transform:rotateY(115deg) translateZ(40px) translateX(8%); opacity:0; }
+@keyframes sumirSelo{
+    to{ opacity:0; visibility:hidden; }
 }
 
 #brilhoSelo{
     position:fixed;
-    left:48%;
+    left:50%;
     top:66%;
-    width:36vh;
-    height:36vh;
+    width:30vh;
+    height:30vh;
     transform:translate(-50%,-50%) scale(.6);
     border-radius:50%;
-    background:radial-gradient(circle, rgba(255,241,196,0.95) 0%, rgba(232,197,120,0.6) 45%, rgba(212,175,55,0) 75%);
+    background:radial-gradient(circle, rgba(255,241,196,0.9) 0%, rgba(232,197,120,0.5) 45%, rgba(212,175,55,0) 75%);
     z-index:9;
     opacity:0;
     pointer-events:none;
 }
 
-#camadaSelo.tocado #brilhoSelo{
-    animation:pulsoSelo .8s ease-in-out forwards;
+.ativo #brilhoSelo{
+    animation:pulsoSelo .6s ease-in-out forwards;
 }
 
 @keyframes pulsoSelo{
     0%{ opacity:0; transform:translate(-50%,-50%) scale(.5); }
-    50%{ opacity:1; transform:translate(-50%,-50%) scale(1.15); }
-    100%{ opacity:.9; transform:translate(-50%,-50%) scale(1); }
+    60%{ opacity:.9; transform:translate(-50%,-50%) scale(1.05); }
+    100%{ opacity:0; transform:translate(-50%,-50%) scale(1); }
 }
 
-#luzAbertura{
+/* BRILHO SUAVE (sozinho, depois que o selo já sumiu) */
+
+#brilhoSuave{
     position:fixed;
     left:50%;
     top:50%;
-    width:40vh;
-    height:40vh;
-    transform:translate(-50%,-50%) scale(0);
+    width:24vh;
+    height:24vh;
+    transform:translate(-50%,-50%) scale(.5);
     border-radius:50%;
-    background:radial-gradient(circle, rgba(255,247,214,1) 0%, rgba(232,197,120,0.85) 40%, rgba(212,175,55,0) 74%);
-    z-index:8;
+    background:radial-gradient(circle, rgba(255,247,214,.85) 0%, rgba(232,197,120,0.45) 50%, rgba(212,175,55,0) 78%);
+    filter:blur(2px);
+    z-index:5;
     opacity:0;
     pointer-events:none;
 }
 
-.ativo #luzAbertura{
-    animation:crescerLuz 3.2s ease-out forwards .8s;
+.ativo #brilhoSuave{
+    animation:apareceBrilhoSuave 1.6s ease-in-out forwards 1.4s;
 }
 
-@keyframes crescerLuz{
-    0%{ opacity:0; transform:translate(-50%,-50%) scale(.3); }
-    35%{ opacity:1; }
-    100%{ opacity:0; transform:translate(-50%,-50%) scale(3.4); }
+@keyframes apareceBrilhoSuave{
+    0%{ opacity:0; transform:translate(-50%,-50%) scale(.5); }
+    35%{ opacity:1; transform:translate(-50%,-50%) scale(1); }
+    70%{ opacity:1; transform:translate(-50%,-50%) scale(1.1); }
+    100%{ opacity:0; transform:translate(-50%,-50%) scale(1.3); }
 }
 
-#camadaFumaca{
-    position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    z-index:6;
-    pointer-events:none;
-    opacity:0;
-}
-
-#camadaFumaca.ativa{
-    opacity:1;
-}
-
-.nuvem{
-    position:absolute;
-    border-radius:50%;
-    background:radial-gradient(circle, rgba(232,197,120,0.95) 0%, rgba(212,175,55,0.55) 40%, rgba(212,175,55,0) 72%);
-    filter:blur(6px);
-    opacity:0;
-    transform:scale(.3);
-}
-
-.ativa .nuvem{
-    animation:crescerNuvem 2.2s ease-out forwards;
-}
-
-@keyframes crescerNuvem{
-    0%{ opacity:0; transform:scale(.2) translateY(0); }
-    18%{ opacity:.95; }
-    100%{ opacity:0; transform:scale(2.4) translateY(-55px); }
-}
-
-.n1{ width:260px; height:260px; left:50%; top:50%; margin:-130px 0 0 -130px; animation-delay:3.5s !important; }
-.n2{ width:200px; height:200px; left:30%; top:55%; margin:-100px 0 0 -100px; animation-delay:3.58s !important; }
-.n3{ width:220px; height:220px; left:70%; top:48%; margin:-110px 0 0 -110px; animation-delay:3.65s !important; }
-.n4{ width:170px; height:170px; left:42%; top:35%; margin:-85px 0 0 -85px; animation-delay:3.72s !important; }
-.n5{ width:190px; height:190px; left:62%; top:65%; margin:-95px 0 0 -95px; animation-delay:3.62s !important; }
-.n6{ width:150px; height:150px; left:22%; top:38%; margin:-75px 0 0 -75px; animation-delay:3.8s !important; }
-.n7{ width:150px; height:150px; left:78%; top:32%; margin:-75px 0 0 -75px; animation-delay:3.76s !important; }
-
-.particula{
-    position:absolute;
-    width:5px;
-    height:5px;
-    border-radius:50%;
-    background:#f6e2a0;
-    box-shadow:0 0 8px 2px rgba(246,226,160,.9);
-    opacity:0;
-}
-
-.ativa .particula{
-    animation:subirParticula 2.4s ease-out forwards;
-}
-
-@keyframes subirParticula{
-    0%{ opacity:0; transform:translateY(0) scale(.6); }
-    15%{ opacity:1; }
-    100%{ opacity:0; transform:translateY(-200px) scale(1.4); }
-}
+/* TEXTO CONVITE ESPECIAL (sozinho na tela) */
 
 #textoEspecial{
     position:fixed;
     top:50%;
     left:50%;
-    transform:translate(-50%,-50%) scale(.85);
-    z-index:7;
+    transform:translate(-50%,-50%) scale(.9);
+    z-index:6;
     font-family:"Cormorant Garamond", serif;
     font-style:italic;
     font-weight:600;
-    font-size:clamp(62px, 19vw, 108px);
-    line-height:0.8;
+    font-size:clamp(56px, 17vw, 96px);
+    line-height:0.85;
     text-align:center;
     background:linear-gradient(180deg, #e7ce87 0%, #c5a15b 45%, #aa8838 100%);
     -webkit-background-clip:text;
     background-clip:text;
     -webkit-text-fill-color:transparent;
     color:#c5a15b;
-    filter:drop-shadow(0 0 14px rgba(255,250,225,.85)) drop-shadow(0 3px 6px rgba(90,65,20,.45));
+    filter:drop-shadow(0 0 12px rgba(255,250,225,.8)) drop-shadow(0 3px 6px rgba(90,65,20,.4));
     opacity:0;
     pointer-events:none;
-    width:94%;
+    width:92%;
 }
 
 .ativo #textoEspecial{
-    animation:apareceTextoEspecial 2.5s ease-out forwards 4.3s;
+    animation:apareceTextoEspecial 2s ease-in-out forwards 2.0s;
 }
 
 @keyframes apareceTextoEspecial{
-    0%{ opacity:0; transform:translate(-50%,-50%) scale(.85); }
-    16%{ opacity:1; transform:translate(-50%,-50%) scale(1); }
-    72%{ opacity:1; transform:translate(-50%,-50%) scale(1); }
-    100%{ opacity:0; transform:translate(-50%,-50%) scale(1.08); }
-}
-
-.ativo #camadaSelo,
-.ativo #camadaFumaca,
-.ativo #luzAbertura{
-    animation-name: sumirTudoFinal;
-    animation-duration: .7s;
-    animation-timing-function: ease-in;
-    animation-fill-mode: forwards;
-    animation-delay: 5.3s;
-}
-
-@keyframes sumirTudoFinal{
-    to{ opacity:0; visibility:hidden; }
+    0%{ opacity:0; transform:translate(-50%,-50%) scale(.9); }
+    25%{ opacity:1; transform:translate(-50%,-50%) scale(1); }
+    75%{ opacity:1; transform:translate(-50%,-50%) scale(1); }
+    100%{ opacity:0; transform:translate(-50%,-50%) scale(1.04); }
 }
 </style>
 </head>
@@ -292,33 +178,13 @@ html, body{
     <div class="icone-toque" id="btnLocal" onclick="window.open('https://www.google.com/maps/search/?api=1&query=Rua+Manoel+Dias+de+Pinho%2C+22%2C+Ponta+Por%C3%A3%2C+MS','_blank')"></div>
 </div>
 
-<div id="luzAbertura"></div>
-
-<div id="camadaFumaca">
-    <div class="nuvem n1"></div>
-    <div class="nuvem n2"></div>
-    <div class="nuvem n3"></div>
-    <div class="nuvem n4"></div>
-    <div class="nuvem n5"></div>
-    <div class="nuvem n6"></div>
-    <div class="nuvem n7"></div>
-
-    <div class="particula" style="left:35%; top:60%; animation-delay:3.6s;"></div>
-    <div class="particula" style="left:55%; top:55%; animation-delay:3.75s;"></div>
-    <div class="particula" style="left:45%; top:45%; animation-delay:3.9s;"></div>
-    <div class="particula" style="left:65%; top:62%; animation-delay:3.65s;"></div>
-    <div class="particula" style="left:40%; top:50%; animation-delay:4s;"></div>
-    <div class="particula" style="left:60%; top:40%; animation-delay:3.8s;"></div>
-    <div class="particula" style="left:50%; top:65%; animation-delay:3.55s;"></div>
-    <div class="particula" style="left:30%; top:48%; animation-delay:3.95s;"></div>
-</div>
+<div id="brilhoSuave"></div>
 
 <div id="textoEspecial">Convite<br>Especial</div>
 
-<div id="camadaSelo" onclick="abrirConvite()">
+<div id="telaSelo" class="tela" onclick="abrirConvite()">
     <div id="brilhoSelo"></div>
-    <div class="porta" id="portaEsquerda"><img src="selo-esquerda.png"></div>
-    <div class="porta" id="portaDireita"><img src="selo-direita.png"></div>
+    <img src="selo.png">
 </div>
 
 <script>
@@ -350,9 +216,11 @@ function abrirConvite(){
     if (jaAbriu) return;
     jaAbriu = true;
 
-    document.getElementById('camadaSelo').classList.add('tocado');
-    document.getElementById('camadaFumaca').classList.add('ativa');
     document.body.classList.add('ativo');
+
+    setTimeout(function(){
+        document.body.classList.add('pronto');
+    }, 5000);
 }
 </script>
 
