@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Carmem Mosqueira - 80 anos</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,600&display=swap" rel="stylesheet">
 <style>
 *{
     margin:0;
@@ -41,15 +40,6 @@ html, body{
 
 #telaConvite{
     z-index:1;
-    opacity:0;
-}
-
-.ativo #telaConvite{
-    animation:revelarConvite .9s ease-out forwards 3.6s;
-}
-
-@keyframes revelarConvite{
-    to{ opacity:1; }
 }
 
 .icone-toque{
@@ -68,40 +58,11 @@ body.pronto .icone-toque{
 }
 
 .ativo #telaSelo{
-    animation:sumirSelo .7s ease-in forwards;
+    animation:sumirSelo .6s ease-in forwards;
 }
 
 @keyframes sumirSelo{
     to{ opacity:0; visibility:hidden; }
-}
-
-#textoEspecial{
-    position:fixed;
-    top:50%;
-    left:50%;
-    transform:translate(-50%,-50%);
-    z-index:6;
-    font-family:"Cormorant Garamond", serif;
-    font-style:italic;
-    font-weight:600;
-    font-size:clamp(48px, 15vw, 84px);
-    line-height:0.9;
-    text-align:center;
-    color:#c5a15b;
-    opacity:0;
-    pointer-events:none;
-    width:88%;
-}
-
-.ativo #textoEspecial{
-    animation:apareceTextoEspecial 2s ease-in-out forwards 1.3s;
-}
-
-@keyframes apareceTextoEspecial{
-    0%{ opacity:0; }
-    25%{ opacity:1; }
-    75%{ opacity:1; }
-    100%{ opacity:0; }
 }
 </style>
 </head>
@@ -114,8 +75,6 @@ body.pronto .icone-toque{
     <div class="icone-toque" id="btnPresente" onclick="window.location.href='presentes.html'"></div>
     <div class="icone-toque" id="btnLocal" onclick="window.open('https://www.google.com/maps/search/?api=1&query=Rua+Manoel+Dias+de+Pinho%2C+22%2C+Ponta+Por%C3%A3%2C+MS','_blank')"></div>
 </div>
-
-<div id="textoEspecial">Convite<br>Especial</div>
 
 <div id="telaSelo" class="tela" onclick="abrirConvite()">
     <img src="selo.png">
@@ -151,10 +110,7 @@ function abrirConvite(){
     jaAbriu = true;
 
     document.body.classList.add('ativo');
-
-    setTimeout(function(){
-        document.body.classList.add('pronto');
-    }, 4600);
+    document.body.classList.add('pronto');
 }
 </script>
 
