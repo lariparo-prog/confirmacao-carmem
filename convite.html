@@ -39,15 +39,13 @@ html, body{
     -webkit-user-drag:none;
 }
 
-/* CONVITE DE FUNDO (só aparece no final) */
-
 #telaConvite{
     z-index:1;
     opacity:0;
 }
 
 .ativo #telaConvite{
-    animation:revelarConvite .9s ease-out forwards 4.0s;
+    animation:revelarConvite .9s ease-out forwards 3.6s;
 }
 
 @keyframes revelarConvite{
@@ -64,107 +62,46 @@ body.pronto .icone-toque{
     pointer-events:auto;
 }
 
-/* SELO */
-
 #telaSelo{
     z-index:10;
     cursor:pointer;
 }
 
 .ativo #telaSelo{
-    animation:sumirSelo .8s ease-in forwards .6s;
+    animation:sumirSelo .7s ease-in forwards;
 }
 
 @keyframes sumirSelo{
     to{ opacity:0; visibility:hidden; }
 }
 
-#brilhoSelo{
-    position:fixed;
-    left:50%;
-    top:66%;
-    width:30vh;
-    height:30vh;
-    transform:translate(-50%,-50%) scale(.6);
-    border-radius:50%;
-    background:radial-gradient(circle, rgba(255,241,196,0.9) 0%, rgba(232,197,120,0.5) 45%, rgba(212,175,55,0) 75%);
-    z-index:9;
-    opacity:0;
-    pointer-events:none;
-}
-
-.ativo #brilhoSelo{
-    animation:pulsoSelo .6s ease-in-out forwards;
-}
-
-@keyframes pulsoSelo{
-    0%{ opacity:0; transform:translate(-50%,-50%) scale(.5); }
-    60%{ opacity:.9; transform:translate(-50%,-50%) scale(1.05); }
-    100%{ opacity:0; transform:translate(-50%,-50%) scale(1); }
-}
-
-/* BRILHO SUAVE (sozinho, depois que o selo já sumiu) */
-
-#brilhoSuave{
-    position:fixed;
-    left:50%;
-    top:50%;
-    width:24vh;
-    height:24vh;
-    transform:translate(-50%,-50%) scale(.5);
-    border-radius:50%;
-    background:radial-gradient(circle, rgba(255,247,214,.85) 0%, rgba(232,197,120,0.45) 50%, rgba(212,175,55,0) 78%);
-    filter:blur(2px);
-    z-index:5;
-    opacity:0;
-    pointer-events:none;
-}
-
-.ativo #brilhoSuave{
-    animation:apareceBrilhoSuave 1.6s ease-in-out forwards 1.4s;
-}
-
-@keyframes apareceBrilhoSuave{
-    0%{ opacity:0; transform:translate(-50%,-50%) scale(.5); }
-    35%{ opacity:1; transform:translate(-50%,-50%) scale(1); }
-    70%{ opacity:1; transform:translate(-50%,-50%) scale(1.1); }
-    100%{ opacity:0; transform:translate(-50%,-50%) scale(1.3); }
-}
-
-/* TEXTO CONVITE ESPECIAL (sozinho na tela) */
-
 #textoEspecial{
     position:fixed;
     top:50%;
     left:50%;
-    transform:translate(-50%,-50%) scale(.9);
+    transform:translate(-50%,-50%);
     z-index:6;
     font-family:"Cormorant Garamond", serif;
     font-style:italic;
     font-weight:600;
-    font-size:clamp(56px, 17vw, 96px);
-    line-height:0.85;
+    font-size:clamp(48px, 15vw, 84px);
+    line-height:0.9;
     text-align:center;
-    background:linear-gradient(180deg, #e7ce87 0%, #c5a15b 45%, #aa8838 100%);
-    -webkit-background-clip:text;
-    background-clip:text;
-    -webkit-text-fill-color:transparent;
     color:#c5a15b;
-    filter:drop-shadow(0 0 12px rgba(255,250,225,.8)) drop-shadow(0 3px 6px rgba(90,65,20,.4));
     opacity:0;
     pointer-events:none;
-    width:92%;
+    width:88%;
 }
 
 .ativo #textoEspecial{
-    animation:apareceTextoEspecial 2s ease-in-out forwards 2.0s;
+    animation:apareceTextoEspecial 2s ease-in-out forwards 1.3s;
 }
 
 @keyframes apareceTextoEspecial{
-    0%{ opacity:0; transform:translate(-50%,-50%) scale(.9); }
-    25%{ opacity:1; transform:translate(-50%,-50%) scale(1); }
-    75%{ opacity:1; transform:translate(-50%,-50%) scale(1); }
-    100%{ opacity:0; transform:translate(-50%,-50%) scale(1.04); }
+    0%{ opacity:0; }
+    25%{ opacity:1; }
+    75%{ opacity:1; }
+    100%{ opacity:0; }
 }
 </style>
 </head>
@@ -178,12 +115,9 @@ body.pronto .icone-toque{
     <div class="icone-toque" id="btnLocal" onclick="window.open('https://www.google.com/maps/search/?api=1&query=Rua+Manoel+Dias+de+Pinho%2C+22%2C+Ponta+Por%C3%A3%2C+MS','_blank')"></div>
 </div>
 
-<div id="brilhoSuave"></div>
-
 <div id="textoEspecial">Convite<br>Especial</div>
 
 <div id="telaSelo" class="tela" onclick="abrirConvite()">
-    <div id="brilhoSelo"></div>
     <img src="selo.png">
 </div>
 
@@ -220,7 +154,7 @@ function abrirConvite(){
 
     setTimeout(function(){
         document.body.classList.add('pronto');
-    }, 5000);
+    }, 4600);
 }
 </script>
 
