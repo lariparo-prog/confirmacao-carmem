@@ -112,9 +112,18 @@ function posicionarBotoes(){
 }
 
 window.addEventListener('load', posicionarBotoes);
-window.addEventListener('resize', posicionarBotoes);
 
 let jaAbriu = false;
+
+// Se voltou da tela de presentes (convite já tinha sido aberto), pula direto pro convite
+if (new URLSearchParams(window.location.search).get('aberto') === '1') {
+    document.body.classList.add('ativo');
+    document.body.classList.add('pronto');
+    document.getElementById('telaSelo').style.display = 'none';
+    jaAbriu = true;
+}
+
+window.addEventListener('resize', posicionarBotoes);
 
 function abrirConvite(){
     if (jaAbriu) return;
