@@ -7,14 +7,14 @@
 
 <meta property="og:title" content="Convite Especial • Carmem Mosqueira 80 anos">
 <meta property="og:description" content="Toque para abrir o convite">
-<meta property="og:image" content="https://lariparo-prog.github.io/confirmacao-carmem/capa.png">
-<meta property="og:url" content="https://lariparo-prog.github.io/confirmacao-carmem/convite.html">
+<meta property="og:image" content="https://lariparo-prog.github.io/carmem-80-anos/capa.png">
+<meta property="og:url" content="https://lariparo-prog.github.io/carmem-80-anos/convite.html">
 <meta property="og:type" content="website">
 
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Convite Especial • Carmem Mosqueira 80 anos">
 <meta name="twitter:description" content="Toque para abrir o convite">
-<meta name="twitter:image" content="https://lariparo-prog.github.io/confirmacao-carmem/capa.png">
+<meta name="twitter:image" content="https://lariparo-prog.github.io/carmem-80-anos/capa.png">
 <style>
 *{
     margin:0;
@@ -75,30 +75,6 @@ body.pronto .icone-toque{
 @keyframes sumirSelo{
     to{ opacity:0; visibility:hidden; }
 }
-
-#brilhoToque{
-    position:fixed;
-    left:50%;
-    top:66%;
-    width:26vh;
-    height:26vh;
-    transform:translate(-50%,-50%) scale(.5);
-    border-radius:50%;
-    background:radial-gradient(circle, rgba(255,244,214,.85) 0%, rgba(232,197,120,0.4) 50%, rgba(212,175,55,0) 78%);
-    z-index:11;
-    opacity:0;
-    pointer-events:none;
-}
-
-.ativo #brilhoToque{
-    animation:pulsoBreve .5s ease-out forwards;
-}
-
-@keyframes pulsoBreve{
-    0%{ opacity:0; transform:translate(-50%,-50%) scale(.5); }
-    35%{ opacity:1; transform:translate(-50%,-50%) scale(1); }
-    100%{ opacity:0; transform:translate(-50%,-50%) scale(1.15); }
-}
 </style>
 </head>
 <body>
@@ -112,7 +88,6 @@ body.pronto .icone-toque{
 </div>
 
 <div id="telaSelo" class="tela" onclick="abrirConvite()">
-    <div id="brilhoToque"></div>
     <img src="selo.png">
 </div>
 
